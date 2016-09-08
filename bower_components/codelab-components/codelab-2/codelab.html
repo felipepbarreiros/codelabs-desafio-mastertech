@@ -1,0 +1,229 @@
+<!--
+Copyright (c) 2015 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Construindo uma interface de usuário simples</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js" async></script>
+  <script>
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: 'max',
+      useNativeCSSProperties: true
+    };
+  </script>
+  <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+  <link rel="import" href="../google-codelab-elements.html">
+  <style is="custom-style">
+    body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
+  </style>
+</head>
+<body>
+
+  <google-codelab title="Construindo uma interface de usuário simples"
+                  feedback-link=""
+                  environment="web"
+                  last-updated="">
+
+    <google-codelab-step label="Visão geral" duration="2">
+
+    <p>Neste codelab, você irá criar um layout em XML que inclui um campo de texto e um botão. Na próxima lição, seu aplicativo responde quando o botão é pressionado, enviando o conteúdo do campo de texto para outra atividade.</p>
+
+    <p>A interface gráfica do usuário para um aplicativo Android é construído usando uma hierarquia de objetos <code>View</code> e <code>ViewGroup</code>. Objetos <code>View</code> são geralmente botões ou campos de texto. Objetos <code>ViewGroup</code> são invisíveisque definem como as views filhas são colocadas, como em um grid ou em uma lista vertical.</p>
+
+    <p>Android fornece um vocabulário XML que corresponde às subclasses de <code>View</code> e <code>ViewGroup</code> para que você possa definir o seu UI em XML usando uma hierarquia de elementos de interface do usuário.</p>
+
+    <p>Layouts são subclasses da <code>ViewGroup</code>. Neste codelab, você vai trabalhar com um <code>LinearLayout</code>.</p>
+
+    <div><img src="img-1.png" style="max-width:400px"></div>
+
+    <h3 class="checklist">Neste codelab você irá:</h3>
+    <ul class="checklist">
+    <li>Criar um layout linear</li>
+    <li>Adicionar um TextField</li>
+    <li>Adicionar Recursos de String</li>
+    <li>Adicionar um botão</li>
+    <li>Fazer com que a caixa de texto preencha a largura da tela</li>
+    </ul>
+    <h3>Do que você vai precisar</h3>
+    <ul>
+    <li>Entendimento básico de programação, tanto quanto lógica de programação.</li>
+    <li>Ter o <a href="https://developer.android.com/studio/index.html">Android Studio</a> instalado.</li>
+    </ul>
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Criando um Layout Linear" duration="5">
+
+      <ol>
+        <li>Dentro da pasta <code>res/layout/</code>, abra o arquivo <code>activity_main.xml</code>
+        <p>Este arquivo XML define o Layout da sua atividade. Contém a Textview "Hello World"</p>
+        </li>
+        When you open a layout file, you’re first shown the design editor in the Layout Editor. For this lesson, you work directly with the XML, so click the Text tab to switch to the text editor.
+        <li>Quando você abrir o arquivo de layout, a primeira coisa que aparecerá é o editor de <strong>Design</strong> no <code>Layout Editor</code>. Para este codelab, você irá trabalhar direto no arquivo XML, então clique na aba <strong>Text</strong> para mudar para o editor de texto.</li>
+        <li>Altere o conteúdo do arquivo XML para o seguinte código:
+        <pre><code language="">
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"&gt;
+&lt;/LinearLayout&gt;
+</code></pre>
+        </li>
+      </ol>
+
+      <p>LinearLayout é uma view grup (uma subclasse de <code>ViewGroup</code> que faz o layout de views filhas tanto na orientação vertical quanto na horizontal, como especificado no atributo <code>android:orientation</code>. Cada filho de <code>LinearLayout</code> aparece na tela na ordem que aparece no XML.</p>
+
+      <p>Dois outros atributos: <code>android:layout_width</code> e <code>android:layout_height</code>, são requeridos para todas as views para especificar seu tamanho.</p>
+      <p>Porque o <code>LinearLayout</code> não é a view raiz do layout, ele deve preencher a tela inteira que está disponível no app com <code>"match_parent"</code>. Este valor declara que a view deve expandir seu comprimento e largura para preencher o comprimento e largura da view pai.</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Adicionando um campo de texto" duration="5">
+    <p>No arquivo <code>activity_main.xml</code>, dentro de <code>&lt;LinearLayout&gt;</code>, adicione o seguinte elemento <code>&lt;EditText&gt;</code></p>
+    <p><pre><code>
+&lt;LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="horizontal"&gt;
+
+&lt;EditText android:id="@+id/edit_message"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:hint="@string/edit_message" /&gt;
+
+&lt;/LinearLayout&gt;
+    </code></pre></p>
+
+    <p>Aqui está uma descrição do <code>&lt;EditText&gt;</code> que você adicionou.</p>
+
+    <h3><code>android:id</code></h3>
+    <p>Este campo dá um identificador único para a view, que você pode usar para referenciar o objeto do código de seu app, como ler e manipupar o objeto (você verá mais pra frente).</p>
+    <p>O arroba (@) é obrigatório quando você está referenciando qualquer objeto a partir do XML. É seguido pelo tipo de recurso (<code>id</code> neste caso), uma barra, e depois o nome do recurso <code>edit_message</code>.</p>
+    <p>O sinal de mais (+) antes do tipo do recurso é necessário somente quando você estea definindo um ID do recurso pela primeira vez. Quando você compilar o app, o SDK tools usa o ID do nome para criar um novo ID do recurso no arquivo <code>gen/R.java</code> que faz referência ao elemento <code>EditText</code>. Com o ID do recurso declarado desta forma, outras referências ao ID não precisam do sinal de mais.</p>
+    <h3><code>android:layout_width</code> e <code>android:layout_height</code></h3>
+    <p>Ao invés de usar tamanhos específicos para comprimento e largura, o valor <code>"wrap_content"</code> especifica que a view deve ser apenas grande o suficiente para preencher o conteúdo da view. Se você for utilizar <code>"match_parent"</code>, então o elemento <code>EditText</code> irá preencher a tela, porque ele vai igualar o tamanho do objeto pai <code>LinearLayout.</code></p>
+    <h3><code>android:hint</code></h3>
+    <p>Esta é uma string padrão para mostrar quando o campo de texto está vazio. Ao invés de usar strings no código fonte como valor, o <code>@string/edit_message</code> faz referência ao recurso de string definidos em um arquivo separado.</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Adicionando recursos de string" duration="5">
+    <p>Por padrão, seu projeto Android inclui uma referência à string em <code>res/values/strings.xml</code>. Aqui você irá adicionar duas novas strings.</p>
+    <ol>
+      <li>Da pasta <code>res/values</code>, abra <code>strings.xml</code>.</li>
+      <li>Adicione duas strings para que seu arquivo pareça com este:</li>
+    </ol>
+
+    <p><pre><code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;resources>
+    &lt;string name="app_name"&gt;My First App&lt;/string&gt;
+    &lt;string name="edit_message"&gt;Enter a message&lt;/string&gt;
+    &lt;string name="button_send"&gt;Send&lt;/string&gt;
+&lt;/resources></code></pre></p>
+
+    <p>Para o texto na interface do usuário, sempre especifique cada string como recurso. Recursos de string habilita você a gerenciar todos os textos da UI em um único local, o que torna mais fácil para encontrar e atualizar. Externalizando as strings também habilita você a localizar seu app para diferentes linguagems ao prover definições diferentes para cada recurso de string.</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Adicionando um botão" duration="5">
+    <p>Volte para o arquivo <code>activity_main.xml</code> e adicione um botão depois de <code>&lt;EditText&gt;</code>. Seu arquivo deve estar como este:</p>
+    <p><pre><code>
+&lt;LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"&gt;
+&lt;EditText android:id="@+id/edit_message"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:hint="@string/edit_message" /&gt;
+&lt;Button
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="@string/button_send" /&gt;
+&lt;/LinearLayout&gt;</code></pre></p>
+
+  <aside class="special"><p><strong>Nota</strong>: Este botão não precisa do atributo <code>android:id</code> porque ele não será referenciado a partir do código da atividade.</p></aside>
+
+  <p>O layout está para que tanto o <code>EditText</code> e o <code>Button</code> sejam apenas grandes o suficientes para preencher o conteúdo, como a figura abaixo mostra:</p>
+  <p><img src="img2.png" style="max-width:300px"></p>
+  <p>Esta configuração funciona bem para o botão, mas não tão bem para o campo de texto, porque o usuário pode digitar algo maior. Seria legal se pudesse ser preenchido o espaço em branco da tela com o campo de texto. Você pode fazer isso usando um <code>LinearLayout</code> com a propriedade <code>weight</code>, especificada usando o atributo <code>android:layout_weight</code>.</p>
+  <p>O valor de peso (weight) é um número que especifica a quantidade de espaço de sobra que cada view deve consumir, relativo à quantidade consumida das views irmãs. Funciona como a quantidade de ingredientes em uma receita: "2 partes de refigerante, 1 parte de bebida" significa que dois terços da bebida é refrigerante. Por exemplo, se você dá um peso de 2 e outro peso de 1, a soma é 3, então a primeira view irá preencher 2/3 do espaço restante e a segunda view consumirá o restante. Se você adicionar uma terceira view com peso 1, então a primeira view (com peso 2) agora tem metade do espaço em branco enquanto as views restantes tem 1/4 cada.</p>
+  <p>O peso padrão de todas as views é 0, então você deve especificar qualquer peso acima de 0.</p>
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Faça com que a Input Box preencha a tela" duration="5">
+
+    <p>Em <code>activity_main.xml</code>, modifique o <code>&lt;EditText&gt;</code> para que os atributos fiquem como abaixo:</p>
+    <p><pre><code>
+&lt;EditText android:id="@+id/edit_message"
+  android:layout_weight="1"
+  android:layout_width="0dp"
+  android:layout_height="wrap_content"
+  android:hint="@string/edit_message" /&gt;
+    </code></pre></p>
+    <p>Configurando com o comprimento zero (0dp) melhora o desempenho do layout por que usando <code>wrap_content</code> como a largura faz com que o sistema calcule o comprimento que é completamente irrelevante por que o valor de peso requer outro cálculo de comprimento para preencher o espaço restante.</p>
+    <p><img src="img-3.png" style="max-width:300px"></p>
+
+    <p>Seu <code>activity_main.xml</code> deve estar assim:</p>
+    <p><pre><code>
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"&gt;
+&lt;EditText android:id="@+id/edit_message"
+  android:layout_weight="1"
+  android:layout_width="0dp"
+  android:layout_height="wrap_content"
+  android:hint="@string/edit_message" /&gt;
+&lt;Button
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="@string/button_send" /&gt;
+&lt;/LinearLayout&gt;
+    </code></pre></p>
+
+    </google-codelab-step>
+    <google-codelab-step label="Rode seu app" duration="5">
+    <p>Este layout é aplicado por padrão na classe <code>Activity</code> que o SDK tools gerou quando criou seu projeto.</p>
+    <p>Para rodar seu app e ver os resultados, clique em <strong>Run 'app'</strong><img src="img-4.png" style="max-width:25px">na barra de ferramentas.</p>
+    <p>Siga para o próximo codelab para iniciar outra atividade em seu projeto Android.</p>
+    </google-codelab-step>
+
+  </google-codelab>
+
+</body>
+</html>

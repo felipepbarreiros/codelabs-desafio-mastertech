@@ -1,0 +1,202 @@
+<!--
+Copyright (c) 2015 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Adicionando outra atividade</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js" async></script>
+  <script>
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: 'max',
+      useNativeCSSProperties: true
+    };
+  </script>
+  <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+  <link rel="import" href="../google-codelab-elements.html">
+  <style is="custom-style">
+    body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
+  </style>
+</head>
+<body>
+
+  <google-codelab title="Adicionando outra atividade"
+                  feedback-link=""
+                  environment="web"
+                  last-updated="">
+
+    <google-codelab-step label="Visão geral" duration="2">
+
+    <p>Depois de ter completado o codelab anterior, você deve ter um app que mostra uma atividade (uma tela única) com um campo de texto e um botão. Neste codelab, você irá adicionar código na <code>MainActivity</code> que inicia uma nova atividade quando o usuário clica no botão Send.</p>
+    <h3 class="checklist">Neste codelab você irá:</h3>
+    <ul class="checklist">
+    <li>Responder ao botão Send</li>
+    <li>Construir um Intent</li>
+    <li>Criar uma Segunda Atividade</li>
+    <li>Mostrar a Mensagem</li>
+    </ul>
+    <h3>Do que você vai precisar</h3>
+    <ul>
+    <li>Entendimento básico de programação, tanto quanto lógica de programação.</li>
+    <li>Um projeto concluído do codelab #2</li>
+    <li>Ter o <a href="https://developer.android.com/studio/index.html">Android Studio</a> instalado.</li>
+    </ul>
+
+      </google-codelab-step>
+
+      <google-codelab-step label="Respondendo ao botão Send" duration="5">
+
+      <ol>
+        <li>No arquivo <code>res/layout/activity_main.xml</code>, adicione o atributo <code>android:onClick</code> ao elemento <code>Button</code> como mostrado abaixo:
+        <p><pre><code>
+&lt;Button
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="@string/button_send"
+  android:onClick="sendMessage" /&gt;
+        </code></pre></p>
+        </li>
+        <p>Este atributo diz ao sistam para chamar o método <code>sendMessage()</code> na sua atividade quando o usuário clicar no botão.</p>
+        <li>No arquivo <code>MainActivity.java</code>, adicione o método stub <code>sendMessage()</code> como mostrado abaixo:</li>
+        <p><pre><code>
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /** Called when the user clicks the Send button */
+    public void sendMessage(View view) {
+        // Do something in response to button
+    }
+}</code></pre></p>
+        <p>Para que o sistema iguale este método com o método nomeado em <code>android:onClick</code>, a assinatura deve ser exatamente como mostrada. Especificamente, o método precisa:</p>
+        <ul>
+          <li>Ser público</li>
+          <li>Ter um retorno void</li>
+          <li>Ter uma <code>View</code> como o único parâmetro (será a <code>View</code> que será clicada)</li>
+        </ul>
+      </ol>
+      <p>No próximo passo, você irá preencher este método para ler o conteúdo do campo de texto e entregar o texto para outra atividade.</p>
+    </google-codelab-step>
+
+    <google-codelab-step label="Construindo um Intent" duration="5">
+    <p>Um <code>Intent</code> é um objeto que provê ligação em tempo de execução dos difentes componentes (como duas atividades). O <code>Intent</code> representa uma "vontade de fazer algo" do app. Você pode usar intents (intenções) para uma variedade grande de tarefas, mas neste codelab, seu intent irá iniciar outra atividade.</p>
+    <p>Na <code>MainActivity.java</code>, adicione o código mostrado abaixo para <code>SendMessage();</code>:</p>
+    <p><pre><code>
+public class MainActivity extends AppCompatActivity {
+    public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /** Called when the user clicks the Send button */
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+}</code></pre></p>
+
+    <aside class=""><p>O Android Studio irá mostrar erros <code>Cannot resolve symbol</code> porque o código faz referências às classes como <code>Intent</code> e <code>EditText</code> que não foram importadas. Para importar estas clases você pode 1) Usar a funcionalidade do Android Studio "import class" pressionando Alt + Enter (Option + Return no Mac) ou 2) manualmente adicionar linhas de importação no topo do arquivo.</p></aside>
+
+    <p>Há muitas coisas acontecendo em <code>sendMessage()</code>, então vamos explicar o que está acontecendo.</p>
+    <p>O construtor <code>Intent</code> toma dois parâmetros:</p>
+    <ul>
+      <li>Um <code>Context</code> como primeiro parâmetro (<code>this</code> é usado porque a classe <code>Activity</code> é subclasse de <code>Context</code>).</li>
+      <li>A <code>Class</code> do componente do app que o sistema deve entregar a <code>Intent</code>(neste caso, a atividade que será iniciada).</li>
+    </ul>
+
+    <aside><strong>Nota:</strong> A referência para <code>DisplayMessageActivity</code> irá gerar um erro no Android Studio por que a classe ainda não existe. Ignore o erro por enquanto; você irá criar essa classe em breve.</aside>
+
+    <p>O método <code>putExtra()</code> adicione o valor <code>EditText</code> para o intent. O <code>Intent</code> pode levar tipos de dados em formato chave-valor chamado de extras. Sua chave é uma constante púvlica <code>EXTRA_MESSAGE</code> por que a próxima atividade usa a chave para recuperar o valor do texto. É uma boa prática definir chaves para intent extras usando o nome de pacote de seu app como prefixo. Isto garante que as chaves são únicas, caso seu app interaja com outros apps.</p>
+    <p>O método <code>startActivity()</code> inicia uma instância de <code>DisplayMessageActivity</code> especificado no <code>Intent</code>. Agora você pdoe criar a classe.</p>
+
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Criando a Segunda Atividade" duration="5">
+    <ol>
+      <li>Na janela <strong>Project</strong>, clique com o botão direito na pasta <strong>app</strong> e selecione <strong>New > Activity > Empty Activity</strong>.</li>
+      <li>Na janela <strong>Configure Activity</strong>, digite "DisplayMessageActivity" para <strong>Activity Name</strong> e clique em <strong>Finish</strong>.</li>
+    </ol>
+    <p>O Android Studio faz automaticamente três coisas:</p>
+    <ul>
+      <li>Cria a classe <code>DisplayMessageActivity.java</code> com a implementação do método obrigatório <code>onCreate()</code>.</li>
+      <li>Cria o arquivo de layout correspondente <code>activity_display_message.xml</code></li>
+      <li>Adiciona o elemento obrigatório <code>&lt;activity&gt;</code> em <code>AndroidManifest.xml</code></li>
+    </ul>
+    <p>Se vocie rodar o app e clicar no botão Send na primeira atividade, a segunda atividade inicia, mas está vazia. Isto porque a segunda atividade usa o layout vazio como modelo.</p>
+    </google-codelab-step>
+
+    <google-codelab-step label="Criando a Segunda Atividade" duration="5">
+    <p>Agora você irá modificar a segunda atividade para mostrar a mensagem passada pela primeira atividade:</p>
+    <ol>
+      <li>Em <code>DisplayMessageActivity.java</code>, adicione o seguinte código no método <code>onCreate()</code>:
+      <p><pre><code>
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.activity_display_message);
+
+   Intent intent = getIntent();
+   String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+   TextView textView = new TextView(this);
+   textView.setTextSize(40);
+   textView.setText(message);
+
+   ViewGroup layout = (ViewGroup) findViewById(R.id.activity_display_message);
+   layout.addView(textView);
+}</code></pre></p>
+      </li>
+      <li>Pressione Alt + Enter (option + return no Mac) para importar classes que estão faltando</li>
+    </ol>
+
+    <p>Há muitas coisas acontecendo aqui, então vamos explicar:</p>
+    <ol>
+      <li>A chamada <code>getIntent</code> pega a intent que iniciou a atividade. Toda <code>Activity</code> é chamada por um <code>Intent</code>, não importando como o usuário navegou até ali. A chamada <code>getStringExtra()</code> recupera os dados da primeira atividade.</li>
+      <li>Você, através da programação, criou um <code>TextView</code> e configurou seu tamanho e mensagem.</li>
+      <li>Você adicionou a <code>TextView</code> ao layout identificado por <code>R.id.activity_display_message</code>. Você pode fazer um cast do layout para <code>ViewGroup</code> porque é a superclasse de todos os layouts e contém o método <code>addView()</code>.</li>
+    </ol>
+    <aside><strong>Nota:</strong> O layout XML gerado nas versões anteriores do Android Studio talvez não inclua o atributo <code>android:id</code> A chamada <code>findViewById()</code> irá falhar se o layout não tiver o atributo <code>android:id</code>. Se for este o csao, abra <code>activity_display_message.xml</code> e adicione o atributo <code>android:id="@+id/activity_display_message"</code> para o elemento de layout.</aside>
+
+    <p>Agora você pode rodar o app. Quando ele abrir, digite uma mensagem no campo de texto e clique em <strong>Send</strong>. A segunda atividade substitui a primeira na tela, mostrando a mensagem que você digitou na primeira atividade.</p>
+    </google-codelab-step>
+
+    <google-codelab-step label="Rodando seu app" duration="5">
+    <p>É isso aí, você construiu seu primeiro app Android!</p>
+    <div style="text-align:center">
+    <iframe src="//giphy.com/embed/D63BmEGlxJYLC?html5=true&hideSocial=true" width="480" height="271" frameborder="0" class="giphy-embed" allowfullscreen=""></iframe></div>
+    </google-codelab-step>
+
+  </google-codelab>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!--
+Copyright (c) 2015 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>codelab demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js" async></script>
+  <script>
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: 'max',
+      useNativeCSSProperties: true
+    };
+  </script>
+  <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+  <link rel="import" href="../google-codelab-elements.html">
+  <style is="custom-style">
+    body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
+  </style>
+</head>
+<body>
+
+  <google-codelab title="Criando seu primeiro projeto no Android Studio!"
+                  feedback-link=""
+                  environment="web"
+                  last-updated="">
+
+    <google-codelab-step label="Visão geral" duration="2">
+
+    <p><img src="img-droid-studio.png" style="max-width:700px"></p><p>Neste codelab você irá aprender a construir seu primeiro aplicativo Android através da ferramenta Android Studio criada pelo Google e disponibilizada para o público em 2013.</p>
+
+    <p>O Android Studio oferece as ferramentas mais rápidas para a criação de aplicativos em todos os tipos de dispositivos Android, incluindo dispositivos Poynt.</p><p>Recursos como edição de código de nível global, depuração, ferramentas de desempenho, sistema flexível de compilação e criação/implantação instantâneas permitem que você se concentre na criação de aplicativos exclusivos de alta qualidade.</p>
+
+    <h3 class="checklist">O que você vai aprender</h3>
+    <ul class="checklist">
+    <li>Como iniciar um novo projeto no Android Studio.</li>
+    <li>Os arquivos que fazem um projeto Android e as funcionalidades de cada um.</li>
+    <li>Como rodar seu primeiro projeto em emulador.</li>
+    </ul>
+    <h3>Do que você vai precisar</h3>
+    <ul>
+    <li>Entendimento básico de programação, tanto quanto lógica de programação.</li>
+    <li>Ter o <a href="https://developer.android.com/studio/index.html">Android Studio</a> instalado.</li>
+    </ul>
+
+      </google-codelab-step>
+
+    <google-codelab-step label="Começando do começo" duration="3">
+
+<h2>Criando um novo projeto</h2>
+
+<aside class="special"><p>Abra o Android Studio a partir do link no seu desktop e garanta que não há nenhum projeto já criado. Se houver, fique tranquilo para remover todos os projetos desta máquina.</p></aside>
+
+<ol>
+  <li>Inicie um novo projeto clicando em <strong>Start a new Android Studio project</strong><br><img src="img-2.png" style="max-width:343px"></li>
+  <li>Coloque um nome de sua preferência em Application Name</li>
+  <li>Deixe todos os campos padrão e clique em <strong>Next</strong></li>
+  <li>Selecione a opção <strong>Phone and Tablet</strong> para criar este aplicativo</li>
+  <li>Garanta que a opção Minimum SDK esteja para <strong>API 19: Android 4.4 (KitKat)</strong><br>Esta é a versão utilizada nos aparelhos Poynt, e por isso que vamos aprender a construir nosso aplicativo nesta versão</li>
+  <li>Clique em <strong>Next</strong></li>
+  <li>Selecione uma Atividade Vazia (Empty Activity) como base deste aplicativo e clique em <strong>Next</strong></li>
+  <li>Deixe esta atividade com nome padrão e clique em <strong>Finish</strong></li>
+</ol>
+
+<p>A primeira vez que você cria um projeto no Android Studio, ele vai criar seu ambiente de desenvolvimento e ajustar todos os arquivos de acordo com as opções colocadas nas fases anteriores. É possível que este processo dure até um minuto, dependendo do computador que você está utilizando.</p>
+      </google-codelab-step>
+
+    <google-codelab-step label="Entendendo a estrutura" duration="5">
+
+    <p>É importante que você se entenda a estrutura de pastas e arquivos dentro de um projeto no Android Studio, mas não é preciso decorar a função de cada um. Use esta página como guia durante codelab.</p>
+
+    <h3><code>MainActivity.java</code></h3>
+    <p>Este arquivo aparece assim que o assistente de criação de um novo projeto finaliza. Ele contém a definição de classe da atividade que você criou no passo anterior. Quando você construir (Build) e rodar o app, esta atividade inicia e carrega o arquivo de layout que diz "Hello World".</p>
+
+    <h3><code>activity_main.xml</code></h3>
+    <p>Este arquivo XML define o layout da atividade. Contém um elemento TextView com o texto "Hello world!"</p>
+
+    <h3><code>AndroidManifest.xml</code></h3>
+    <p>O arquivo de manifesto descreve as características fundamentas do app e define cada um de seus componentes. Você vai abrir este arquivo assim que for desenvolvendo os codelabs e adicionair mais componentes ao seu app.</p>
+
+    <h3><code>build.gradle</code></h3>
+    <p>O Android Studio usa o Gradle para compilar e construir seu app. Há um arquivo <code>build.gradle</code> para cada módulo de seu projeto, assim como um arquivo <code>build.gradle</code> para o projeto como um todo. É comum que neste processo de criação de apps você esteja interessado apenas no <code>build.gradle</code> do módulo. É aqui onde as dependências do seu app são configradas, inclusive as configurações padrões:</p>
+    <ul>
+      <li><code>compiledSdkVersion</code> é a versão da plataforma com a qual você irá compilar seu aplicativo. Por padrão, isso é definido como a última versão do Android disponível no seu SDK. Por padrão, isso é definido como a última versão do Android SDK instalado em sua máquina de desenvolvimento. Você ainda pode construir seu aplicativo para suportar as versões mais antigas, mas essa configuração para a versão mais recente permite ativar novos recursos e otimizar seu aplicativo para uma grande experiência do usuário sobre os mais recentes aparelhos.</li>
+      <li><code>applicationId</code> é o nome do pacote totalmente qualificado para a sua aplicação que especificou no assistente New Project</li>
+      <li><code>minSdkVersion</code> é a versão SDK mínimo especificado durante o assistente New Project. Esta é a versão mais antiga do Android SDK que seu aplicativo suporta.</li>
+      <li><code>targetSdkVersion</code> indica a maior versão do Android com o qual você tenha testado sua aplicação. À medida que novas versões do Android se tornam disponíveis, você deve testar seu aplicativo na nova versão e atualizar este valor para corresponder ao nível API mais recente e, assim, tirar proveito dos novos recursos da plataforma.</li>
+    </ul>
+
+    <p>Note que as subpastas <code>/res</code> contém os recursos para seu app:</p>
+    <h3><code>drawable-<density>/</code></h3>
+    <p>Diretório para os recursos <i>drawable</i>, ícones de lançamento para as diferentes densidades de tela</p>
+    <h3><code>layout/</code></h3>
+    Directory for files that define your app's user interface like activity_main.xml, discussed above, which describes a basic layout for the MainActivity class.
+    <p>Diretório para arquivos que definem a interface de usuário do seu app como <code>activity_main.xml</code> discutido acima, que descreve a layout básico para a classe <code>Main Activity</code>.</p>
+    <h3><code>menu/</code></h3>
+    <p>Diretório que define os menus de seu app</p>
+    <h3><code>minimap/</code></h3>
+    <p>Ícones de abertura residem na pasta <code>minimap/</code> ao invés da pasta <code>drawable/</code>. Esta pasta contém a imagem <code>ic_launcher.png</code> que é apresentada quando você roda seu app padrão.</p>
+    <h3><code>values/</code></h3>
+    <p>Diretório para outros arquivos XML que contém uma coleção de recursos, como string e definições de cores.</p>
+
+      </google-codelab-step>
+
+    <google-codelab-step label="Criando um emulador" duration="5">
+
+    <p>Para que você possa testar se seu app está realizando as funções que você programou de maneira correta, há duas formas de testar na prática:</p>
+    <ul>
+      <li><strong>Emulador:</strong> através de um emulador que fica na própria máquina, você é capaz de ver seu app rodando sem precisar de um aparelho android e testar em diferentes tamanhos de tela.</li>
+      <li><strong>Aparelho físico:</strong> enviando o seu aplicativo em desenvolvimento para o aparelho físico, além de ter a facilidade de usabilidade real, você poderá coletar feedback de funcionalidades com outras pessoas.</li>
+    </ul>
+
+    <h2>Criando um novo emulador</h2>
+    
+    <ol>
+      <li>
+      <p>Para criar um novo aparelho a ser emulado na máquina, clique no ícone de um celular com um android em baixo. Se você mantiver o mouse em cima deste botão, aparecerá o texto <strong>AVD Manager</strong></p>
+      <p><img src="img-3.png" style="max-width:300px"></p></li>
+      <li>Clique em <strong>Create virtual device</strong></li>
+      <li>Como os codelabs estão voltados para criar um apps baseados no tamanho de um Terminal Poynt, selecione em <strong>Category</strong> Tablet e a opção <strong>Nexus 7 (2012)</strong> e clique em <strong>Next</strong>
+      <p><img src="img-4.png" style="max-width:600px"></p></li>
+      <li>Na seleção de imagem do sistema, garanta que a opção <strong>KitKat (API 19)</strong> está selecionada, pois é a versão que os Terminais Poynt suportam e clique em <strong>Next</strong>.
+      <p><img src="img-5.png" style="max-width:600px;"></p></li>
+      <p>Finalize a criação de uma nova imagem de emulador confirmando as opções dos passos anteriores clicando em <strong>Finish</strong>.</p>
+    </ol>
+
+    <h2>Executando seu app no emulador</h2>
+      <p>Feche a tela do AVD Manager agora que você já criou seu emulador e clique no botão<img src="img-6.png" style="max-width:28px">para compilar seu aplicativo e executá-lo em seu emulador. É comum que o processo de compilação do código e carregamento do emulador tome mais de um minuto. Use esse tempo para comemorar seu primeiro app Android! :D</p>
+
+    </google-codelab-step>
+
+  </google-codelab>
+
+</body>
+</html>

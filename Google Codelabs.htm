@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://codelabs.developers.google.com/ -->
+<html lang="en" class="gr__codelabs_developers_google_com"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="description" content="Google Codelabs">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Google Codelabs">
+  <meta name="application-name" content="Google Codelabs">
+  <title>Codelabs Mastertech</title>
+
+  <link rel="manifest" href="https://codelabs.developers.google.com/manifest.json">
+  <link rel="shortcut icon" sizes="192x192" href="https://codelabs.developers.google.com/images/touch/icon_192.png">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#37474F">
+  <meta name="apple-mobile-web-app-title" content="Google Codelabs">
+  <link rel="apple-touch-icon" href="https://codelabs.developers.google.com/images/touch/icon_144.png">
+
+  <!-- Win 8 -->
+  <meta name="msapplication-TileImage" content="images/touch/icon_144.png">
+  <meta name="msapplication-TileColor" content="#37474F">
+
+  <link rel="stylesheet" href="./Google Codelabs_files/main.css">
+
+  <link rel="import" href="https://codelabs.developers.google.com/elements/critical.html" async="">
+
+  <style is="custom-style"></style>
+<style></style><link rel="import" href="https://codelabs.developers.google.com/elements/elements.html" async=""></head>
+<!-- <body id="app" is="my-app" class="loading fullbleed "> -->
+<body id="app" is="body-bind" class="fullbleed" data-gr-c-s-loaded="true">
+
+  <span id="browser-sync-binding"></span>
+
+  <!-- Needed 2 queries due to https://github.com/PolymerElements/iron-media-query/issues/15 -->
+  <iron-media-query query="(max-width:768px)" hidden="" style="display: none;"></iron-media-query>
+  <iron-media-query query="(min-width: 768px)" hidden="" style="display: none;"></iron-media-query>
+
+  <paper-drawer-panel id="drawer" force-narrow="" style="touch-action: pan-y;" narrow="" selected="main">
+
+    <!-- <div drawer="">
+      <paper-header-panel mode="seamed" at-top="">
+        <paper-toolbar class="tall animate" role="toolbar">
+          <h4 class="bottom">Events</h4>
+        </paper-toolbar>
+        <paper-listbox class="banner-events" attr-for-selected="data-route" role="listbox" tabindex="0"><paper-item data-route="/android-dev-summit" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/android-dev-summit">Android Dev Summit 2015</a></paper-item>
+            <paper-item data-route="/chrome-dev-summit" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/chrome-dev-summit">Chrome Developers Summit 2015</a></paper-item>
+            <paper-item data-route="/babbq-2015" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/babbq-2015">Big Android Barbecue 2015</a></paper-item>
+            <paper-item data-route="/games" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/games">TV Games Codelabs</a></paper-item>
+            <paper-item data-route="/io2016" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/io2016">Google I/O 2016</a></paper-item>
+            <paper-item data-route="/gcp-next-tok" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/gcp-next-tok">GCP Next Tokyo</a></paper-item>
+            <paper-item data-route="/gcp-next" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/gcp-next">GCP Next</a></paper-item>
+            <paper-item data-route="/hadoop-summit" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/hadoop-summit">Hadoop Summit Coding Challenges</a></paper-item>
+            <paper-item data-route="/mongodb-world" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/mongodb-world">MongoDB World Coding Challenges</a></paper-item>
+            <paper-item data-route="/polymer-summit" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/polymer-summit">Polymer Summit</a></paper-item>
+            <paper-item data-route="/polytechnic-pt-br" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/polytechnic-pt-br">Polytechnic Brazil</a></paper-item>
+            <paper-item data-route="/polytechnic" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/polytechnic">Polytechnic</a></paper-item>
+            <paper-item data-route="/pwa-roadshow" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/pwa-roadshow">PWA Roadshow</a></paper-item>
+            <paper-item data-route="/pwa-dev-summit" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/pwa-dev-summit">PWA Dev Summit 2016</a></paper-item>
+            <paper-item data-route="/springone" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/springone">SpringOne Cloud Challenges</a></paper-item>
+            <paper-item data-route="/strata" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/strata">Strata Coding Challenges</a></paper-item>
+            <paper-item data-route="/sxsw" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/sxsw">SxSW Coding Challenges</a></paper-item>
+            <paper-item data-route="/ubiquity" role="option" tabindex="-1" aria-disabled="false"><a href="https://codelabs.developers.google.com/ubiquity">Ubiquitous Computing Dev Summit</a></paper-item>
+            
+        </paper-listbox>
+      </paper-header-panel>
+    </div> -->
+
+    <paper-header-panel id="main" mode="waterfall" main="" at-top="">
+      
+<!--       <div id="mainToolbar" class="paper-header animate">
+        <paper-icon-button icon="menu" paper-drawer-toggle="" hidden="" role="button" tabindex="0" aria-disabled="false"></paper-icon-button>
+        <div class="site-width layout horizontal">
+          <a href="https://codelabs.developers.google.com/" title="Google Developers">
+            <img src="./Google Codelabs_files/developers-logo.svg" class="logo-icon">
+            <img src="./Google Codelabs_files/lockup_developers_light_color.svg" class="logo-devs">
+          </a>
+          <div id="searchbar">
+            <paper-input-container no-label-float="">
+              <paper-icon-button prefix="" icon="search" role="button" tabindex="0" aria-disabled="false"></paper-icon-button>
+              <label>Search</label>
+              <input is="iron-input">
+              <paper-icon-button suffix="" icon="clear" role="button" tabindex="0" aria-disabled="false" hidden=""></paper-icon-button>
+            </paper-input-container>
+            <paper-icon-button icon="search" hidden="" role="button" tabindex="0" aria-disabled="false"></paper-icon-button>
+          </div>
+        </div>
+      </div> -->
+      
+
+      
+      <header id="banner">
+        <div class="banner-slider">
+          <div class="site-width layout horizontal center">
+            <h3 id="banner_slider_title">Codelabs</h3>
+            <template is="dom-if"></template>
+          </div>
+        </div>
+        <div class="site-width">
+          
+          <h2 class="banner-title">Bem vindo ao Codelabs!</h2>
+          <div class="banner-description">
+            <p class="banner-info">Os Codelabs do Mastertech foram criados para você ter experiências hands-on com as tecnologias Android, Lua e Poynt. Cada codelab foi criado para você aprender uma funcionalidade específica e aproveitar o que tem disponível nos SDKs de cada uma destas plataformas.</p>
+
+
+            <!-- LOGO DO MASTERTECH -->
+            <div class="filters">
+              <div class="filters-buttons">
+                <iron-selector attr-for-selected="filter">
+                  <img src="Google Codelabs_files/img/Logo-MasterTech-reduzido.png" width="50%" height="50%">
+                </iron-selector>
+              </div>
+            </div>
+            
+
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <div class="site-width layout horizontal center justified">
+          <div id="sortby">
+          </div>
+          </div>
+
+        <card-sorter id="cards" class="site-width">
+
+        <!-- INÍCIO DO CARD -->
+        <a href="bower_components/codelab-components/codelab-1/codelab.html" class="codelab-card category-android" data-category="Android">
+          <div class="card-header android-bg">
+            <div id="icon" class="category-icon android-icon" style="background-image:url(https://codelabs.developers.google.com/images/icons/android.svg)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Criando seu primeiro projeto no Android Studio</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="bower_components/codelab-components/codelab-2/codelab.htmll" class="codelab-card category-android" data-category="Android">
+          <div class="card-header android-bg">
+            <div id="icon" class="category-icon android-icon" style="background-image:url(https://codelabs.developers.google.com/images/icons/android.svg)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Criando uma Interface de Usuário Simples</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="bower_components/codelab-components/codelab-3/codelab.html" class="codelab-card category-android" data-category="Android">
+          <div class="card-header android-bg">
+            <div id="icon" class="category-icon android-icon" style="background-image:url(https://codelabs.developers.google.com/images/icons/android.svg)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Adicionando outra atividade</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-about" data-category="Android">
+          <div class="card-header about-bg">
+            <div id="icon" class="category-icon about-icon" style="background-image:url(https://d85ecz8votkqa.cloudfront.net/images/marketing/poynt-logo-icon.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Fazendo sua primeira transação com Poynt utilizando Fragments</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-about" data-category="Android">
+          <div class="card-header about-bg">
+            <div id="icon" class="category-icon about-icon" style="background-image:url(https://d85ecz8votkqa.cloudfront.net/images/marketing/poynt-logo-icon.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Imprimindo através da máquina da Poynt</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-about" data-category="Android">
+          <div class="card-header about-bg">
+            <div id="icon" class="category-icon about-icon" style="background-image:url(https://d85ecz8votkqa.cloudfront.net/images/marketing/poynt-logo-icon.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Integrando uma aplicação Android existente com uma solução Poynt</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-analytics" data-category="Android">
+          <div class="card-header analytics-bg">
+            <div id="icon" class="category-icon analytics-icon" style="background-image:url(Google Codelabs_files/img/rede2.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Criando sua primeira aplicação Lua</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-analytics" data-category="Android">
+          <div class="card-header analytics-bg">
+            <div id="icon" class="category-icon analytics-icon" style="background-image:url(Google Codelabs_files/img/rede2.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Fazendo integração com meio de pagamento</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+        <!-- INÍCIO DO CARD -->
+        <a href="#" class="codelab-card category-analytics" data-category="Android">
+          <div class="card-header analytics-bg">
+            <div id="icon" class="category-icon analytics-icon" style="background-image:url(Google Codelabs_files/img/rede2.png)"></div>
+            <div class="card-duration">
+                <img src="./Google Codelabs_files/schedule.svg">
+                <span>10 min</span>
+              </div>
+            </div>
+          <div class="description">Fazendo impressão através do terminal</div>
+          <div class="card-footer">
+            <paper-button role="button" tabindex="0" animated="" aria-disabled="false" elevation="0">Iniciar</paper-button>
+            <span class="card-updated">Atualizado 6/9/2016</span>
+            </div>
+          <paper-ripple></paper-ripple>
+        </a>
+        <!-- FIM DO CARD -->
+
+
+
+      </main>
+
+      <!-- <footer id="footer">
+        <div class="footer-wrapper site-width">
+          <div class="link-list">
+            <label>Connect</label>
+            <ul>
+              <li><a href="https://googledevelopers.blogspot.com/">Blog</a></li>
+              <li><a href="https://www.facebook.com/pages/Google-Developers/967415219957038">Facebook</a></li>
+              <li><a href="https://plus.google.com/+GoogleDevelopers/posts">Google+</a></li>
+              <li><a href="https://medium.com/google-developers">Medium</a></li>
+              <li><a href="https://twitter.com/googledevs">Twitter</a></li>
+              <li><a href="https://www.youtube.com/user/GoogleDevelopers">YouTube</a></li>
+            </ul>
+          </div>
+          <div class="link-list">
+            <label>Programs</label>
+            <ul>
+              <li><a href="https://www.womentechmakers.com/">Women Techmakers</a></li>
+              <li><a href="https://developers.google.com/agency/">Agency Program</a></li>
+              <li><a href="https://developers.google.com/groups/">Google Developer Groups</a></li>
+              <li><a href="https://developers.google.com/experts/">Google Developer Experts</a></li>
+              <li><a href="https://developers.google.com/startups/">Startup Launchpad</a></li>
+            </ul>
+          </div>
+          <div class="link-list">
+            <label>Developer Consoles</label>
+             <ul>
+              <li><a href="https://console.developers.google.com/">Google API Console</a></li>
+              <li><a href="https://console.cloud.google.com/">Google Cloud Developer Console</a></li>
+              <li><a href="https://play.google.com/apps/publish/">Google Play Developer Console</a></li>
+              <li><a href="https://firebase.google.com/console/">Firebase Console</a></li>
+              <li><a href="https://cast.google.com/publish/">Cast SDK Developer Console</a></li>
+              <li><a href="https://chrome.google.com/webstore/developer/dashboard">Chrome Web Store Dashboard</a></li>
+            </ul>
+          </div>
+          <div class="link-list">
+            <label>Explore</label>
+             <ul>
+              <li><a href="https://developers.google.com/android/">Android</a></li>
+              <li><a href="https://developers.google.com/ios/">iOS</a></li>
+              <li><a href="https://developers.google.com/web/">Web</a></li>
+              <li><a href="https://developers.google.com/games/">Games</a></li>
+              <li><a href="https://developers.google.com/products/">All Products</a></li>
+              <li><a href="https://www.google.com/about/careers/">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer> -->
+
+      <div class="footerbar">
+        <div class="site-width layout horizontal center justified">
+          <span>
+            <a target="_blank" href="http://mastertech.tech">Mastertech</a>
+            &nbsp; | &nbsp;
+            <a target="_blank" href="http://mastertech.tech/desafio" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Privacy Link">Desafio</a>
+          </span>
+          <!-- <paper-dropdown-menu id="langselect" label="Language" no-label-float vertical-align="bottom">
+            <paper-listbox class="dropdown-content" selected="en" attr-for-selected="lang">
+              <paper-item lang="en">English</paper-item>
+              <paper-item lang="fr">français</paper-item>
+              <paper-item lang="de">Deutsch</paper-item>
+              <paper-item lang="it">italiano</paper-item>
+              <paper-item lang="ru">Русский</paper-item>
+              <paper-item lang="es">Español</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu> -->
+        </div>
+      </div>
+
+    </paper-header-panel>
+  </paper-drawer-panel>
+
+  <!-- <paper-toast id="caching-complete"
+               duration="6000"
+               text="Caching complete! This app will work offline.">
+  </paper-toast> -->
+
+  <!-- <platinum-sw-register auto-register
+                        clients-claim
+                        skip-waiting
+                        on-service-worker-installed="displayInstalledToast">
+    <platinum-sw-cache default-cache-strategy="networkFirst"
+                       precache-file="precache.json">
+    </platinum-sw-cache>
+    <platinum-sw-fetch handler="networkOnly"
+                       path="/preview/.*">
+    </platinum-sw-fetch>
+  </platinum-sw-register> -->
+
+  <script async="" src="./Google Codelabs_files/analytics.js"></script><script>
+    (function() {
+      // Temporary unregister any previous active SW.
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(function(reg) {
+          reg.unregister();
+        });
+      }
+      // ------
+
+      // Define before app.js loads.
+      window.GA = 'UA-49880327-14';
+      window.GA_VIEW = '';
+    })();
+  </script>
+
+  <script src="./Google Codelabs_files/app.js" async=""></script>
+
+
+
+
+<script type="text/javascript">(function (){return window.SIG_EXT={}})()</script><span id="buffer-extension-hover-button" style="display: none;position: absolute;z-index: 8675309;width: 100px;height: 25px;background-image: url(&#39;chrome-extension://noojglkidnpfjbincgijbaiedldjfbhh/data/shared/img/buffer-hover-icon@1x.png&#39;);background-size: 100px 25px;opacity: 0.9;cursor: pointer;"></span></body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>

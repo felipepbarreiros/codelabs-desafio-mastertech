@@ -1,0 +1,187 @@
+<!--
+Copyright (c) 2015 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License. You may obtain a copy of
+the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations under
+the License.
+-->
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Adicionando outra atividade</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.min.js" async></script>
+  <script>
+    window.Polymer = {
+      dom: 'shadow',
+      lazyRegister: 'max',
+      useNativeCSSProperties: true
+    };
+  </script>
+  <link rel="stylesheet"
+        href="//fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic|Roboto+Mono:400,700">
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../paper-button/paper-button.html">
+  <link rel="import" href="../google-codelab-elements.html">
+  <style is="custom-style">
+    body {
+      font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial;
+      background: var(--google-codelab-background, --paper-grey-300);
+    }
+  </style>
+</head>
+<body>
+
+  <google-codelab title="Adicionando outra atividade"
+                  feedback-link=""
+                  environment="web"
+                  last-updated="">
+
+  <google-codelab-step label="Visão geral" duration="2">
+
+      <p>Neste codelab você irá integrar o pacote da rede para realizar um pagamento simples a partir de um aplicativo Android existente. Se você quiser aprender a fazer um novo aplicativo Android, acessa a home e veja como criar um novo projeto desde o início.</p>
+
+        <a href="biblioteca-rede.zip">
+          <paper-button class="colored x-scope paper-button-0" raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1">
+            <iron-icon icon="file-download" class="x-scope iron-icon-0">
+              <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" class="style-scope iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                <g class="style-scope iron-icon">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" class="style-scope iron-icon"></path>
+                </g>
+              </svg>
+            </iron-icon>Download da biblioteca
+          <paper-ripple class="style-scope paper-button">
+        </a>
+        <p>Você pode encontrar mais informações a partir do site da <a href="https://poynt.github.io/developer/tut/poynt-payment-fragments.html">Poynt</a>.</p>
+
+    </google-codelab-step>
+    <google-codelab-step label="Adicione a biblioteca ao projeto" duration="2">
+
+    <p>Faça a integração da biblioteca no seu projeto Android colocando ela em <strong>app/libs/</strong></p>
+    <p><img src="img-1.png" style="max-width:400px"></p>
+
+    <p>Assim que a biblioteca for colocada em seu projeto, re-sincronize o projeto em <strong>Build > Rebuild Project</strong> para que o Android Studio possa tomar ciência dos novos arquivos importados.</p>
+
+    <p>Defina as dependências do projeto para que na hora de compilar o código o Gradle possa capturar corretamente as informações de localização do pacote. O módulo de dependências fica na seção <code>Gradle Scrips</code> dentro do módulo <code>build.gradle</code></p>
+
+    <aside class="warning"><strong>Importante</strong>: não altere o arquivo <code>build.gradle</code> que contém as informações de projeto (Project:tokcompra). Há inclusive um aviso considerável indicando que este arquivo não deveria ser alterado. Se você colocar a dependência neste arquivo, os próximos passos <strong>não vão</strong> funcionar corretamente.</aside>
+
+    <p>Adicione a dependência do arquivo <code>aar</code> como descrito abaixo:</p>
+    <p><pre><code>
+dependencies {
+  ..
+  compile(name: 'sdk-1.0-release', ext: 'aar')
+  ..
+}</code></pre></p>
+
+
+    </google-codelab-step>
+
+    <google-codelab-step label="Importe a biblioteca em seu projeto" duration="2">
+    <p>Se você já usou o SDK da Poynt, o nome das classes e a forma como elas se comportam são os mesmos. Atente-se em utilizar os pacotes da Rede para este codelab e para seus projetos reais:</p>
+    <p><pre><code>
+import rede.smartrede.sdk.FlexTipoPagamento;
+import rede.smartrede.sdk.Intents;
+import rede.smartrede.sdk.Payment;
+import rede.smartrede.sdk.PaymentStatus;</code></pre></p>
+    </google-codelab-step>
+
+    <google-codelab-step label="Disparando a Intent" duration="2">
+    <p>Crie uma view do tipo <code>Button</code> para disparar a ação de cobrança. Vamos fazer com um valor aleatório e hard-coded. <strong>Não façam isso em casa crianças</strong>, estamos utilizando este exemplo apenas para você se acostumar com a plataforma e descomplicar o passo-a-passo de integração da plataforma :D</p>
+
+    <p>Para realizar o pagamento, os seguintes passos devem ser seguidos:</p>
+    <ol>
+      <li>Istancie um objeto <code>Payment</code></li>
+      <li>Configure o valor</li>
+      <li>Configure a moeda
+      <aside class="special">Apesar de suportar diferentes moedas, o cartão de crédito pode recusar por uma operação brasileira estar cobrando em moeda estrangeira. Certifique-se de que está usando BRL para cobranças em reais</aside></li>
+      <li>Configure o tipo de pagamento</li>
+      <li>Se o tipo de pagamento for crédito parcelado, configure o número de parcelas</li>
+    </ol>
+    <p>Ao final, seu código para abertura de um Fragment de pagamento deve estar como o código abaixo:</p>
+    <p><pre><code lang="java">
+public void abrirFragmentPagamento(){
+  Payment = new Payment();
+  String referenceId - UUID.randomUUID().toString();
+  payment.setReferenceId(referenceId);
+  long longAmount - ((Double) (10.0 * 100)).longValue();
+  payment.setAmount(longAmount);
+  payment.setCurrency("BRL");
+  payment.setPaymentType(FlexTipoPagamento.CREDITO_PARCELADO);
+  payment.setInstallments(3);
+
+  try{
+    Intent collectPaymentIntent = new Intent(Intents.ACTION_COLLECT_PAYMENT);
+    collectPaymentIntent.putExtra(Intents.INTENT_EXTRAS_PAYMENT, payment);
+    startActivityForResult(collectPaymentIntent, 1);
+  } catch (ActivityNotFoundException ex) {
+    Log.e("TokCompra", "Poynt Payment Activity not found - did you install PoyntServices?");
+  }
+}</code></pre></p>
+    </google-codelab-step>
+
+    <google-codelab-step label="Recebendo a resposta" duration="2">
+    <p>No passo anterior, iniciamos uma activity com método startActivityForResult(). Toda vez que esse método é inicializado, a resposta é devolvida no método onActivityResult. Para receber a resposta, basta sobrescrever o método na activity.</p>
+    <p><pre><code>
+@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Check which request we're responding to
+        if (requestCode == COLLECT_PAYMENT_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    Payment payment = data.getParcelableExtra(Intents.INTENT_EXTRAS_PAYMENT);
+                    Log.d(TAG, "Received onPaymentAction from PaymentFragment w/ Status("
+                            + payment.getStatus() + ")");
+                    if (payment.getStatus().equals(PaymentStatus.COMPLETED)) {
+                        Toast.makeText(this, "Payment Completed", Toast.LENGTH_LONG).show();
+                    } else if (payment.getStatus().equals(PaymentStatus.AUTHORIZED)) {
+                        Toast.makeText(this, "Payment Authorized", Toast.LENGTH_LONG).show();
+                    } else if (payment.getStatus().equals(PaymentStatus.CANCELED)) {
+                        Toast.makeText(this, "Payment Canceled", Toast.LENGTH_LONG).show();
+                    } else if (payment.getStatus().equals(PaymentStatus.FAILED)) {
+                        Toast.makeText(this, "Payment Failed", Toast.LENGTH_LONG).show();
+                    } else if (payment.getStatus().equals(PaymentStatus.REFUNDED)) {
+                        Toast.makeText(this, "Payment Refunded", Toast.LENGTH_LONG).show();
+                    } else if (payment.getStatus().equals(PaymentStatus.VOIDED)) {
+                        Toast.makeText(this, "Payment Voided", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Payment Completed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Toast.makeText(this, "Payment Canceled", Toast.LENGTH_LONG).show();
+            }
+        }
+    }</code></pre></p>
+    </google-codelab-step>
+
+
+    <google-codelab-step label="Ações pós-pagamento" duration="2">
+    <p>Uma vez que o pagamento foi processado, algumas vezes é necessário dar a opção para o lojista executar ações diferentes no pagamento processado. Ações como fazer nada, capturar, fazer estorno e ver detalhes. você pode fazer isso através da Intent <code>DISPLAY_PAYMENT</code>.</p>
+    <p><pre><code>try {
+        Intent displayPaymentIntent = new Intent(Intents.ACTION_DISPLAY_PAYMENT);
+        displayPaymentIntent.putExtra(Intents.INTENT_EXTRAS_TRANSACTION_ID, transactionId);
+        startActivityForResult(displayPaymentIntent, DISPLAY_PAYMENT_REQUEST);
+    } catch (ActivityNotFoundException ex) {
+        Log.e(TAG, "Poynt Payment Activity not found - did you install PoyntServices?", ex);
+    }</code></pre></p>
+    </google-codelab-step>
+
+
+
+  </google-codelab>
+
+</body>
+</html>
