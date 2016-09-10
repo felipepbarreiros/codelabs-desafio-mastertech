@@ -112,9 +112,9 @@ import rede.smartrede.sdk.PaymentStatus;</code></pre></p>
     <p><pre><code lang="java">
 public void abrirFragmentPagamento(){
   Payment = new Payment();
-  String referenceId - UUID.randomUUID().toString();
+  String referenceId = UUID.randomUUID().toString();
   payment.setReferenceId(referenceId);
-  long longAmount - ((Double) (10.0 * 100)).longValue();
+  long longAmount = ((Double) (10.0 * 100)).longValue();
   payment.setAmount(longAmount);
   payment.setCurrency("BRL");
   payment.setPaymentType(FlexTipoPagamento.CREDITO_PARCELADO);
