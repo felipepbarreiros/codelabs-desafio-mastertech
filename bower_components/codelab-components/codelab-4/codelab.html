@@ -111,7 +111,7 @@ import rede.smartrede.sdk.PaymentStatus;</code></pre></p>
     <p>Ao final, seu código para abertura de um Fragment de pagamento deve estar como o código abaixo:</p>
     <p><pre><code lang="java">
 public void abrirFragmentPagamento(){
-  Payment = new Payment();
+  Payment payment = new Payment();
   String referenceId = UUID.randomUUID().toString();
   payment.setReferenceId(referenceId);
   long longAmount = ((Double) (10.0 * 100)).longValue();
