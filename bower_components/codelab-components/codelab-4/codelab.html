@@ -116,7 +116,7 @@ private static final int COLLECT_PAYMENT_REQUEST = 13132;</code></pre></p>
     </ol>
     <p>Ao final, seu código para abertura de um Fragment de pagamento deve estar como o código abaixo:</p>
     <p><pre><code lang="java">
-public void abrirFragmentPagamento(){
+public void abrirFragmentPagamento(View v){
   Payment payment = new Payment();
   String referenceId = UUID.randomUUID().toString();
   payment.setReferenceId(referenceId);
@@ -147,7 +147,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
      // Make sure the request was successful
       if (resultCode == Activity.RESULT_OK) {
         if (data != null) {
-        Payment payment = data.getParcelableExtra(Intents.INTENT_EXTRAS_PAYMENT); 
+        Payment payment = data.getParcelableExtra(Intents.INTENT_EXTRAS_PAYMENT);
         Log.d(TAG, "Received onPaymentAction from PaymentFragment w/ Status(" + payment.getStatus() + ")");
 
         if (payment.getStatus().equals(PaymentStatus.COMPLETED)) {
