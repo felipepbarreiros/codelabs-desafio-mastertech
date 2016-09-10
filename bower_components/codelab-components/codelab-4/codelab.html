@@ -96,6 +96,12 @@ import rede.smartrede.sdk.Payment;
 import rede.smartrede.sdk.PaymentStatus;</code></pre></p>
     </google-codelab-step>
 
+    <google-codelab-step label="Declarar variáveis" duration="2">
+      <p><pre><code>
+private static final int AUTHORIZATION_CODE = 1993;
+private static final int COLLECT_PAYMENT_REQUEST = 13132;</code></pre></p>
+    </google-codelab-step>
+
     <google-codelab-step label="Disparando a Intent" duration="2">
     <p>Crie uma view do tipo <code>Button</code> para disparar a ação de cobrança. Vamos fazer com um valor aleatório e hard-coded. <strong>Não façam isso em casa crianças</strong>, estamos utilizando este exemplo apenas para você se acostumar com a plataforma e descomplicar o passo-a-passo de integração da plataforma :D</p>
 
@@ -134,37 +140,44 @@ public void abrirFragmentPagamento(){
     <p>No passo anterior, iniciamos uma activity com método startActivityForResult(). Toda vez que esse método é inicializado, a resposta é devolvida no método onActivityResult. Para receber a resposta, basta sobrescrever o método na activity.</p>
     <p><pre><code>
 @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Check which request we're responding to
-        if (requestCode == COLLECT_PAYMENT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == Activity.RESULT_OK) {
-                if (data != null) {
-                    Payment payment = data.getParcelableExtra(Intents.INTENT_EXTRAS_PAYMENT);
-                    Log.d(TAG, "Received onPaymentAction from PaymentFragment w/ Status("
-                            + payment.getStatus() + ")");
-                    if (payment.getStatus().equals(PaymentStatus.COMPLETED)) {
-                        Toast.makeText(this, "Payment Completed", Toast.LENGTH_LONG).show();
-                    } else if (payment.getStatus().equals(PaymentStatus.AUTHORIZED)) {
-                        Toast.makeText(this, "Payment Authorized", Toast.LENGTH_LONG).show();
-                    } else if (payment.getStatus().equals(PaymentStatus.CANCELED)) {
-                        Toast.makeText(this, "Payment Canceled", Toast.LENGTH_LONG).show();
-                    } else if (payment.getStatus().equals(PaymentStatus.FAILED)) {
-                        Toast.makeText(this, "Payment Failed", Toast.LENGTH_LONG).show();
-                    } else if (payment.getStatus().equals(PaymentStatus.REFUNDED)) {
-                        Toast.makeText(this, "Payment Refunded", Toast.LENGTH_LONG).show();
-                    } else if (payment.getStatus().equals(PaymentStatus.VOIDED)) {
-                        Toast.makeText(this, "Payment Voided", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this, "Payment Completed", Toast.LENGTH_LONG).show();
-                    }
-                }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Payment Canceled", Toast.LENGTH_LONG).show();
-            }
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+   super.onActivityResult(requestCode, resultCode, data);
+   // Check which request we're responding to
+   if (requestCode == COLLECT_PAYMENT_REQUEST) {
+     // Make sure the request was successful
+      if (resultCode == Activity.RESULT_OK) {
+        if (data != null) {
+        Payment payment = data.getParcelableExtra(Intents.INTENT_EXTRAS_PAYMENT); 
+        Log.d(TAG, "Received onPaymentAction from PaymentFragment w/ Status(" + payment.getStatus() + ")");
+
+        if (payment.getStatus().equals(PaymentStatus.COMPLETED)) {
+          Toast.makeText(this, "Pagamento Concluído", Toast.LENGTH_LONG).show();
         }
-    }</code></pre></p>
+        else if (payment.getStatus().equals(PaymentStatus.AUTHORIZED)) {
+         Toast.makeText(this, "Pagamento Autorizado", Toast.LENGTH_LONG).show();
+        }
+        else if (payment.getStatus().equals(PaymentStatus.CANCELED)) {
+          Toast.makeText(this, "Pagamento Cancelado", Toast.LENGTH_LONG).show();
+        }
+        else if (payment.getStatus().equals(PaymentStatus.FAILED)) {
+          Toast.makeText(this, "Pagamento Falhou", Toast.LENGTH_LONG).show();
+        }
+        else if (payment.getStatus().equals(PaymentStatus.REFUNDED)) {
+          Toast.makeText(this, "Pagamento Reembolsado", Toast.LENGTH_LONG).show();
+        }
+        else if (payment.getStatus().equals(PaymentStatus.VOIDED)) {
+          Toast.makeText(this, "Pagamento Anulado", Toast.LENGTH_LONG).show();
+        }
+        else {
+          Toast.makeText(this, "Pagamento Concluído", Toast.LENGTH_LONG).show();
+        }
+      }
+    }
+    else if (resultCode == Activity.RESULT_CANCELED) {
+      Toast.makeText(this, "Pagamento Cancelado", Toast.LENGTH_LONG).show();
+    }
+  }
+}</code></pre></p>
     </google-codelab-step>
 
 
